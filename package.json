@@ -1,7 +1,7 @@
 {
 	"name" : "run-time-error",
 
-	"version" : "1.4.0",
+	"version" : "1.4.1",
 
     "type" : "module",
 
@@ -21,11 +21,11 @@
 		"exception"
 	],
 
-	"homepage" : "https://github.com/lsphillips/RuntimeError",
+	"homepage" : "https://github.com/lsphillips/run-time-error",
 
 	"bugs" :
 	{
-		"url" : "https://github.com/lsphillips/RuntimeError/issues"
+		"url" : "https://github.com/lsphillips/run-time-error/issues"
 	},
 
 	"devDependencies" :
@@ -78,7 +78,7 @@
 	"repository" :
 	{
 		"type" : "git",
-		"url" : "https://github.com/lsphillips/RuntimeError.git"
+		"url" : "https://github.com/lsphillips/run-time-error.git"
 	},
 
 	"scripts" :

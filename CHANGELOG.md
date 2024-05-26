@@ -2,6 +2,10 @@
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.4.1 - 2024-05-26
+
+A utility library that enables you to efficiently wait for an element to appear or disappear.
+
 ## 1.4.0 - 2021-05-16
 
 ### Added
