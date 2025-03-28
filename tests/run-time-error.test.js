@@ -1,5 +1,11 @@
-import { expect }       from 'chai';
-import { RuntimeError } from '../src/run-time-error.js';
+import {
+	describe,
+	it
+} from 'node:test';
+import assert from 'assert';
+import {
+	RuntimeError
+} from '../src/run-time-error.js';
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -10,69 +16,83 @@ describe('class RuntimeError', function ()
 		it('shall create a runtime error which extends the native `Error` type', function ()
 		{
 			// Act.
-			let error = new RuntimeError();
+			const error = new RuntimeError();
 
 			// Assert.
-			expect(error).to.be.an.instanceof(RuntimeError);
+			assert.ok(error instanceof RuntimeError);
 
 			// Assert.
-			expect(error).to.be.an.instanceof(Error);
+			assert.ok(error instanceof Error);
 		});
 
 		it('shall create a runtime error with a `name` set to `RuntimeError`', function ()
 		{
 			// Act.
-			let error = new RuntimeError();
+			const error = new RuntimeError();
 
 			// Assert.
-			expect(error.name).to.equal('RuntimeError');
+			assert.strictEqual(error.name, 'RuntimeError');
 		});
 
 		it('shall create a runtime error with a given `message` and `cause`', function ()
 		{
 			// Setup.
-			let cause = new Error('This is an error.');
+			const cause = new Error('This is an error.');
 
 			// Act.
-			let error = new RuntimeError('This is a runtime error.', cause);
+			const error = new RuntimeError('This is a runtime error.', cause);
 
 			// Assert.
-			expect(error.message).to.equal('This is a runtime error.');
+			assert.strictEqual(error.message, 'This is a runtime error.');
 
 			// Assert.
-			expect(error.cause).to.equal(cause);
+			assert.strictEqual(error.cause, cause);
 		});
 
 		it('shall create a runtime error with a `cause` set to `null` when no cause is provided', function ()
 		{
 			// Act.
-			let error = new RuntimeError('This is a runtime error with no cause.');
+			const error = new RuntimeError('This is a runtime error with no cause.');
 
 			// Assert.
-			expect(error.cause).to.be.null;
+			assert.strictEqual(error.cause, null);
 		});
 
 		it('shall create a runtime error with a `message` set to `` (an empty string) when no message is provided', function ()
 		{
 			// Act.
-			let error = new RuntimeError();
+			const error = new RuntimeError();
 
 			// Assert.
-			expect(error.message).to.equal('');
+			assert.strictEqual(error.message, '');
 		});
 
 		it('shall create a runtime error with the `message`, `name`, `stack` and `cause` properties being enumerable', function ()
 		{
 			// Act.
-			let properties = Object.keys(
+			const properties = Object.keys(
 				new RuntimeError('This is a runtime error.')
 			);
 
 			// Assert.
-			expect(properties).to.include('name');
-			expect(properties).to.include('message');
-			expect(properties).to.include('stack');
-			expect(properties).to.include('cause');
+			assert.ok(
+				properties.includes('name')
+			);
+
+			// Assert.
+			assert.ok(
+				properties.includes('message')
+			);
+
+			// Assert.
+			assert.ok(
+				properties.includes('stack')
+			);
+
+			// Assert.
+			assert.ok(
+				properties.includes('cause')
+			);
 		});
 	});
 
@@ -81,13 +101,13 @@ describe('class RuntimeError', function ()
 		it('shall return a plain object containing the standard `name`, `message` and `stack` properties of the target runtime error copied to it', function ()
 		{
 			// Setup.
-			let error = new RuntimeError('This is a runtime error.');
+			const error = new RuntimeError('This is a runtime error.');
 
 			// Act.
-			let object = error.toJSON();
+			const json = error.toJSON();
 
 			// Assert.
-			expect(object).to.include({
+			assert.partialDeepStrictEqual(json, {
 				name    : error.name,
 				message : error.message,
 				stack   : error.stack
@@ -97,7 +117,7 @@ describe('class RuntimeError', function ()
 		it('shall return a plain object containing a `cause` property set to the target runtime error cause recursively converted to a plain object with all its properties (enemerable, or non-enemerable) copied to it', function ()
 		{
 			// Setup.
-			let cause = new Error('This is an error.');
+			const cause = new Error('This is an error.');
 
 			// Setup.
 			Object.defineProperty(cause, 'anEnumerableProperty', {
@@ -110,10 +130,10 @@ describe('class RuntimeError', function ()
 			});
 
 			// Act.
-			let object = new RuntimeError('This is a runtime error', cause).toJSON();
+			const json = new RuntimeError('This is a runtime error', cause).toJSON();
 
 			// Assert.
-			expect(object.cause).to.include({
+			assert.partialDeepStrictEqual(json.cause, {
 				name                   : cause.name,
 				message                : cause.message,
 				stack                  : cause.stack,
@@ -124,20 +144,17 @@ describe('class RuntimeError', function ()
 
 		it('shall return a plain object with a `cause` property set to `null` if the target runtime error does not have a cause', function ()
 		{
-			// Setup.
-			let error = new RuntimeError('This is a runtime error.');
-
 			// Act.
-			let object = error.toJSON();
+			const json = new RuntimeError('This is a runtime error.').toJSON();
 
 			// Assert.
-			expect(object.cause).to.equal(null);
+			assert.strictEqual(json.cause, null);
 		});
 
 		it('shall return a plain object containing any additional properties (enemerable, or non-enemerable) copied to it', function ()
 		{
 			// Setup.
-			let error = new RuntimeError('This is a runtime error.');
+			const error = new RuntimeError('This is a runtime error.');
 
 			// Setup.
 			Object.defineProperty(error, 'anEnumerableProperty', {
@@ -150,10 +167,10 @@ describe('class RuntimeError', function ()
 			});
 
 			// Act.
-			let object = error.toJSON();
+			const json = error.toJSON();
 
 			// Assert.
-			expect(object).to.include({
+			assert.partialDeepStrictEqual(json, {
 				anEnumerableProperty   : error.anEnumerableProperty,
 				aNonEnumerableProperty : error.aNonEnumerableProperty
 			});
