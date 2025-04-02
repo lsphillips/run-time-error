@@ -54,7 +54,7 @@ This module also has a robust test suite:
 npm test
 ```
 
-This also runs code quality checks using ESLint. Please refer to the `.eslintrc` files to familiar yourself with the rules.
+This also runs code quality checks using ESLint. Please refer to the `eslint.config.js` files to familiar yourself with the rules.
 
 ## License
 
