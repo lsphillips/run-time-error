@@ -2,7 +2,7 @@ import {
 	describe,
 	it
 } from 'node:test';
-import assert from 'assert';
+import assert from 'node:assert';
 import {
 	RuntimeError
 } from '../src/run-time-error.js';
